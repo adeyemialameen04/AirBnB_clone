@@ -4,12 +4,22 @@ import cmd
 import shlex
 from models import storage
 from models.base_model import BaseModel
+from models.user import User
+from models.state import State
+from models.city import City
+from models.review import Review
+from models.place import Place
+from models.amenity import Amenity
 
 
 class HBNBCommand(cmd.Cmd):
     """Documentation for the console"""
 
     prompt = "(hbnb) "
+    var = "random"
+
+    def do_default(self):
+        print("What do u do exactly? ")
 
     def do_EOF(self, arg):
         """EOF command to exit the program"""
@@ -29,7 +39,7 @@ class HBNBCommand(cmd.Cmd):
         if cls is None:
             print("** class doesn't exist **")
             return
-        obj = cls()
+        obj = cls(name)
         obj.save()
         print(obj.id)
 
