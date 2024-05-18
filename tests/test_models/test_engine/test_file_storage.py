@@ -4,6 +4,7 @@ import os
 import unittest
 from models.user import User
 from models.engine.file_storage import FileStorage
+import json
 
 
 class TestFileStorage(unittest.TestCase):
@@ -33,7 +34,10 @@ class TestFileStorage(unittest.TestCase):
         self.storage.save()
         self.assertEqual(self.file_path, self.storage._FileStorage__file_path)
         self.assertTrue(os.path.exists(self.file_path))
-        # Unfinished
+        key = f"{inst.__class__.__name__}.{inst.id}"
+        with open(self.file_path, 'r') as file:
+            saved_data = json.load(file)
+            self.assertIn(key, saved_data)
 
     def test_all(self):
         inst_1, inst_2 = User(), User()
