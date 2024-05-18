@@ -18,7 +18,6 @@ class HBNBCommand(cmd.Cmd):
 
     prompt = "(hbnb) "
 
-    @staticmethod
     def parse_arg(self, arg):
         args = shlex.split(arg)
         argc = len(args)
@@ -153,11 +152,10 @@ class HBNBCommand(cmd.Cmd):
             print("** class doesn't exist **")
             return
 
-        if method in self.methods:
-            if method == "all()":
-                cls.all(self, name)
-            elif method == "count()":
-                cls.count(self, name)
+        if method == "all()":
+            cls.all(self, name)
+        elif method == "count()":
+            cls.count(self, name)
 
     def emptyline(self):
         """Does nothing."""
