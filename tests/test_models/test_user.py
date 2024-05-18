@@ -23,7 +23,7 @@ class TestUser(unittest.TestCase):
         self.assertIsNotNone(user.id)
         self.assertEqual(user.first_name, "Al-ameen")
         self.assertEqual(user.last_name, "Adeyemi")
-        self.assertEqual(user.first_name, "adeyemialameen04@gmail.com")
+        self.assertEqual(user.email, "adeyemialameen04@gmail.com")
 
 
 if __name__ == "__main__":
