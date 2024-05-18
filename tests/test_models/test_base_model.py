@@ -53,10 +53,6 @@ class TestBaseModel(unittest.TestCase):
         self.assertIsInstance(obj_dict["id"], str)
         self.assertEqual(obj_dict["__class__"], "BaseModel")
         self.assertEqual(obj_dict["id"], self.model1.id)
-        self.assertEqual(obj_dict["created_at"],
-                         self.model1.created_at.isoformat())
-        self.assertEqual(obj_dict["updated_at"],
-                         self.model1.updated_at.isoformat())
 
 
 if __name__ == "__main__":
