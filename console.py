@@ -16,7 +16,30 @@ class HBNBCommand(cmd.Cmd):
     """Documentation for the console"""
 
     prompt = "(hbnb) "
-    var = "random"
+
+    def parse_arg(self, arg):
+        args = shlex.split(arg)
+        argc = len(args)
+        if argc == 0:
+            print("** class name missing **")
+            return None, None, None
+
+        name = args[0]
+        cls = globals().get(name)
+        if cls is None:
+            print("** class doesn't exist **")
+            return None, None, None
+
+        if argc < 2:
+            return cls, None, None
+
+        inst_id = args[1]
+        key = f"{name}.{inst_id}"
+        if key not in storage.all():
+            print("** no instance found **")
+            return None, None, None
+
+        return cls, inst_id, args[2:]
 
     def do_EOF(self, arg=""):
         """EOF command to exit the program"""
@@ -29,65 +52,30 @@ class HBNBCommand(cmd.Cmd):
         return True
 
     def do_create(self, arg):
-        if arg == "":
-            print("** class name missing **")
-            return
-
-        name = arg.split()[0]
-        cls = globals().get(name)
-        if cls is None:
-            print("** class doesn't exist **")
-            return
-        obj = cls(name)
-        obj.save()
-        print(obj.id)
+        cls, _, _ = self.parse_arg(arg)
+        if cls:
+            obj = cls()
+            obj.save()
+            print(obj.id)
 
     def do_show(self, arg):
-        args = shlex.split(arg)
-        argc = len(args)
-        if argc == 0:
-            print("** class name missing **")
-            return
-
-        name = args[0]
-        cls = globals().get(name)
-        if cls is None:
-            print("** class doesn't exist **")
-            return
-        if argc < 2:
+        cls, inst_id, _ = self.parse_arg(arg)
+        if inst_id is None and cls is not None:
             print("** instance id missing **")
             return
-
-        ist_id = args[1]
-        key = f"{name}.{ist_id}"
-        if key not in storage.all():
-            print("** no instance found **")
-            return
-        print(storage.all()[key])
+        if cls and inst_id:
+            key = f"{cls.__name__}.{inst_id}"
+            print(storage.all()[key])
 
     def do_destroy(self, arg):
-        args = shlex.split(arg)
-        argc = len(args)
-        if argc == 0:
-            print("** class name missing **")
-            return
-
-        name = args[0]
-        cls = globals().get(name)
-        if cls is None:
-            print("** class doesn't exist **")
-            return
-        if argc < 2:
+        cls, inst_id, _ = self.parse_arg(arg)
+        if inst_id is None and cls is not None:
             print("** instance id missing **")
             return
-
-        ist_id = args[1]
-        key = f"{name}.{ist_id}"
-        if key not in storage.all():
-            print("** no instance found **")
-            return
-        del storage.all()[key]
-        storage.save()
+        if cls and inst_id:
+            key = f"{cls.__name__}.{inst_id}"
+            del storage.all()[key]
+            storage.save()
 
     def do_all(self, arg):
         """Gets all."""
@@ -159,7 +147,6 @@ class HBNBCommand(cmd.Cmd):
         if cls is None:
             print("** class doesn't exist **")
             return
-
         cls.all(self, name)
 
     def emptyline(self):
