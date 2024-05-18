@@ -17,6 +17,7 @@ class HBNBCommand(cmd.Cmd):
 
     prompt = "(hbnb) "
 
+    @staticmethod
     def parse_arg(self, arg):
         args = shlex.split(arg)
         argc = len(args)
@@ -41,14 +42,13 @@ class HBNBCommand(cmd.Cmd):
 
         return cls, inst_id, args[2:]
 
-    def do_EOF(self, arg=""):
+    def do_EOF(self, arg):
         """EOF command to exit the program"""
         print()
         return True
 
-    def do_quit(self, arg=""):
+    def do_quit(self, arg=):
         """Quit command to exit the program."""
-        print()
         return True
 
     def do_create(self, arg):
