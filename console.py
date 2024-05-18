@@ -18,12 +18,14 @@ class HBNBCommand(cmd.Cmd):
     prompt = "(hbnb) "
     var = "random"
 
-    def do_EOF(self, arg):
+    def do_EOF(self, arg=""):
         """EOF command to exit the program"""
+        print()
         return True
 
-    def do_quit(self, arg):
-        """Quit command to exit the program"""
+    def do_quit(self, arg=""):
+        """Quit command to exit the program."""
+        print()
         return True
 
     def do_create(self, arg):
