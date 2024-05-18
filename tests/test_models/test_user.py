@@ -26,6 +26,8 @@ class TestUser(unittest.TestCase):
         self.assertEqual(user.last_name, "Adeyemi")
         self.assertEqual(user.email, "adeyemialameen04@gmail.com")
         self.assertEqual(user.password, "Opoor")
+        user.save()
+
 
 if __name__ == "__main__":
     unittest.main()
