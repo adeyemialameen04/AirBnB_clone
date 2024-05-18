@@ -17,11 +17,13 @@ class TestUser(unittest.TestCase):
         user = User()
         user.last_name = "Adeyemi"
         user.first_name = "Al-ameen"
+        user.password = "Yare"
         user.email = "adeyemialameen04@gmail.com"
         self.assertIsNotNone(user.id)
         self.assertEqual(user.first_name, "Al-ameen")
         self.assertEqual(user.last_name, "Adeyemi")
         self.assertEqual(user.email, "adeyemialameen04@gmail.com")
+        self.assertEqual(user.password, "Yare")
 
 
 if __name__ == "__main__":
