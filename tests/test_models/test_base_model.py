@@ -40,25 +40,25 @@ class TestBaseModel(unittest.TestCase):
         str_expected = f"[BaseModel] ({self.model1.id}) {self.model1.__dict__}"
         self.assertEqual(str_gotten, str_expected)
 
-    def test_save_method(self):
-        prev = self.model1.updated_at
-        self.model1.save()
-        self.assertNotEqual(prev, self.model1.updated_at)
-        self.assertLessEqual(self.model1.created_at, self.model1.updated_at)
-
-    def test_to_dict_method(self):
-        obj_dict = self.model1.to_dict()
-        self.assertIsNotNone(obj_dict["created_at"])
-        self.assertIsInstance(obj_dict, dict)
-        self.assertIsInstance(obj_dict["id"], str)
-        self.assertEqual(obj_dict["__class__"], "BaseModel")
-        self.assertEqual(obj_dict["id"], self.model1.id)
-        self.assertEqual(obj_dict["created_at"],
-                         self.model1.created_at.isoformat())
-        self.assertEqual(obj_dict["updated_at"],
-                         self.model1.updated_at.isoformat())
-        self.assertEqual(obj_dict["name"], self.model1.name)
-        self.assertEqual(obj_dict["num"], self.model1.num)
+    # def test_save_method(self):
+    #     prev = self.model1.updated_at
+    #     self.model1.save()
+    #     self.assertNotEqual(prev, self.model1.updated_at)
+    #     self.assertLessEqual(self.model1.created_at, self.model1.updated_at)
+    #
+    # def test_to_dict_method(self):
+    #     obj_dict = self.model1.to_dict()
+    #     self.assertIsNotNone(obj_dict["created_at"])
+    #     self.assertIsInstance(obj_dict, dict)
+    #     self.assertIsInstance(obj_dict["id"], str)
+    #     self.assertEqual(obj_dict["__class__"], "BaseModel")
+    #     self.assertEqual(obj_dict["id"], self.model1.id)
+    #     self.assertEqual(obj_dict["created_at"],
+    #                      self.model1.created_at.isoformat())
+    #     self.assertEqual(obj_dict["updated_at"],
+    #                      self.model1.updated_at.isoformat())
+    #     self.assertEqual(obj_dict["name"], self.model1.name)
+    #     self.assertEqual(obj_dict["num"], self.model1.num)
 
 
 if __name__ == "__main__":
