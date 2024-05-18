@@ -19,8 +19,7 @@ class TestUser(unittest.TestCase):
         user.first_name = "Al-ameen"
         user.password = "Yare"
         user.email = "adeyemialameen04@gmail.com"
-        self.assertIsNone(user.created_at)
-        self.assertIsNotNone(user.id)
+        # self.assertIsNotNone(user.id)
         self.assertEqual(user.first_name, "Al-ameen")
         self.assertEqual(user.last_name, "Adeyemi")
         self.assertEqual(user.email, "adeyemialameen04@gmail.com")

@@ -16,7 +16,7 @@ class TestState(unittest.TestCase):
     def test_pub_attrs(self):
         state = State()
         state.name = "Lagos"
-        self.assertIsNone(state.created_at)
+        self.assertIsNotNone(state.updated_at)
         self.assertIsNotNone(state.id)
         self.assertEqual(state.name, "Lagos")
 

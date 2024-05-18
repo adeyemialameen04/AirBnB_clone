@@ -17,7 +17,8 @@ class TestCity(unittest.TestCase):
         city = City()
         city.name = "Lagos"
         city.state_id = "Lagos"
-        self.assertIsNone(city.created_at)
+        self.assertIsNotNone(city.updated_at)
+        self.assertIsNotNone(city.updated_at)
         self.assertIsNotNone(city.id)
         self.assertEqual(city.name, "Lagos")
         self.assertEqual(city.state_id, "Lagos")

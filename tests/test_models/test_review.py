@@ -18,7 +18,8 @@ class TestReview(unittest.TestCase):
         review.place_id = "Lagos"
         review.text = "Random text"
         review.user_id = "mugiwara"
-        self.assertIsNone(review.created_at)
+        self.assertIsNotNone(review.updated_at)
+        self.assertIsNotNone(review.updated_at)
         self.assertIsNotNone(review.id)
         self.assertEqual(review.place_id, "Lagos")
         self.assertEqual(review.user_id, "mugiwara")
