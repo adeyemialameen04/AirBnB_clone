@@ -141,14 +141,10 @@ class HBNBCommand(cmd.Cmd):
 
     def default(self, arg):
         match = re.match(r"(\w+)\.(\w+)\((.*)\)", arg)
-        match_tup = match.groups()
-        argc = len(match_tup)
-        if argc == 0:
-            print("** class name missing **")
-            return
 
         if match:
-            name, method, method_args = match.groups()
+            match_tup = match.groups()
+            name, method, method_args = match_tup
             cls = globals().get(name)
             if cls is None:
                 print("** class doesn't exist **")
@@ -160,11 +156,20 @@ class HBNBCommand(cmd.Cmd):
                 cls.count(self, name)
             elif method == "show":
                 inst_id = method_args.strip('"\'')
-                key = f"{cls.__name__}.{inst_id}"
-                if key not in storage.all():
+                if inst_id == "":
                     print("** instance id missing **")
                     return
+                key = f"{cls.__name__}.{inst_id}"
+                if key not in storage.all():
+                    print("** no instance found **")
+                    return
                 print(storage.all()[key])
+            else:
+                print("*** Unknown syntax:")
+                return
+        else:
+            print(f"*** Unknown syntax: {arg}")
+            return
 
 
     def emptyline(self):
