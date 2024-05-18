@@ -160,10 +160,10 @@ class HBNBCommand(cmd.Cmd):
                 cls.count(self, name)
             elif method == "show":
                 inst_id = method_args.strip('"\'')
-                if inst_id is None and cls is not None:
+                key = f"{cls.__name__}.{inst_id}"
+                if storage.all()[key] is None:
                     print("** instance id missing **")
                     return
-                key = f"{cls.__name__}.{inst_id}"
                 print(storage.all()[key])
 
 
