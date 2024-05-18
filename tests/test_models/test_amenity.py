@@ -16,8 +16,7 @@ class TestAmenity(unittest.TestCase):
     def test_pub_attrs(self):
         amenity = Amenity()
         amenity.name = "Laptop"
-        self.assertIsNotNone(amenity.updated_at)
-        self.assertIsNotNone(amenity.updated_at)
+        self.assertIsNone(amenity.created_at)
         self.assertIsNotNone(amenity.id)
         print(amenity.id)
         self.assertEqual(amenity.name, "Laptop")

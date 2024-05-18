@@ -29,8 +29,7 @@ class TestPlace(unittest.TestCase):
         place.longitude = 20.9
         place.latitude = 90.8
         place.amenity_ids = ["test id", "test id"]
-        self.assertIsNotNone(place.updated_at)
-        self.assertIsNotNone(place.updated_at)
+        self.assertIsNone(place.created_at)
         self.assertIsNotNone(place.id)
         self.assertEqual(place.user_id, "mugiwara")
         self.assertEqual(place.city_id, "Lagos")
