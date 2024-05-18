@@ -1,20 +1,21 @@
 #!/usr/bin/python3
-
-
+"""Documenting module."""
 import unittest
 from models.engine.file_storage import FileStorage
 from models.base_model import BaseModel
 import os
 import json
 
-class TestFileStorage(unittest.TestCase):
 
-    def setUp(self) -> None:
+class TestFileStorage(unittest.TestCase):
+    """Filestorage"""
+
+    def setUp(self):
         self.storage = FileStorage()
-        self.file_path = self.storage._FileStorage__file_path # replace with getter
+        self.file_path = self.storage._FileStorage__file_path
         self.objects = self.storage._FileStorage__objects
 
-    def tearDown(self) -> None:
+    def tearDown(self):
         if os.path.exists(self.file_path):
             os.remove(self.file_path)
 
@@ -32,7 +33,8 @@ class TestFileStorage(unittest.TestCase):
     def test_new_method(self):
         obj = BaseModel()
         self.storage.new(obj)
-        self.assertIn(obj.__class__.__name__ + '.' + obj.id, self.storage.all())
+        self.assertIn(obj.__class__.__name__ + '.' + obj.id,
+                      self.storage.all())
 
     def test_save_method(self):
         obj = BaseModel()
@@ -49,7 +51,9 @@ class TestFileStorage(unittest.TestCase):
         self.storage.save()
         self.storage._FileStorage__objects = {}
         self.storage.reload()
-        self.assertIn(obj.__class__.__name__ + '.' + obj.id, self.storage.all())
+        self.assertIn(obj.__class__.__name__ + '.' + obj.id,
+                      self.storage.all())
+
 
 if __name__ == "__main__":
     unittest.main()
