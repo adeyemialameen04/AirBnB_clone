@@ -56,3 +56,11 @@ class BaseModel:
                 obj_dict[key] = value.isoformat()
 
         return obj_dict
+
+    def all(self, name):
+        objs = []
+
+        for key, value in models.storage.all().items():
+            if key.startswith(name):
+                objs.append(str(value))
+        print(objs)

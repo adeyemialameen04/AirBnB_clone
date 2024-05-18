@@ -18,9 +18,6 @@ class HBNBCommand(cmd.Cmd):
     prompt = "(hbnb) "
     var = "random"
 
-    def do_default(self):
-        print("What do u do exactly? ")
-
     def do_EOF(self, arg):
         """EOF command to exit the program"""
         return True
@@ -148,6 +145,21 @@ class HBNBCommand(cmd.Cmd):
         obj = storage.all()[key]
         setattr(obj, attr_name, attr_val)
         obj.save()
+
+    def default(self, arg):
+        args = arg.split(".")
+        argc = len(args)
+        if argc == 0:
+            print("** class name missing **")
+            return
+
+        name = args[0]
+        cls = globals().get(name)
+        if cls is None:
+            print("** class doesn't exist **")
+            return
+
+        cls.all(self, name)
 
 
     def emptyline(self):
