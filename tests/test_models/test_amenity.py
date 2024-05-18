@@ -19,7 +19,6 @@ class TestAmenity(unittest.TestCase):
         self.assertIsNotNone(amenity.updated_at)
         self.assertIsNotNone(amenity.updated_at)
         self.assertIsNotNone(amenity.id)
-        print(amenity.id)
         self.assertEqual(amenity.name, "Laptop")
 
 
