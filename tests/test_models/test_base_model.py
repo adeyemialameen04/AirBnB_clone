@@ -5,6 +5,7 @@ from models.engine.file_storage import FileStorage
 from models.base_model import BaseModel
 from datetime import datetime
 
+
 class TestBaseModel(unittest.TestCase):
     """The test class for basemodel."""
 
@@ -34,7 +35,6 @@ class TestBaseModel(unittest.TestCase):
         self.assertLessEqual(self.model1.created_at, now)
         self.assertLessEqual(self.model1.updated_at, now)
 
-
     def test_str(self):
         str_gotten = str(self.model1)
         str_expected = f"[BaseModel] ({self.model1.id}) {self.model1.__dict__}"
@@ -53,8 +53,10 @@ class TestBaseModel(unittest.TestCase):
         self.assertIsInstance(obj_dict["id"], str)
         self.assertEqual(obj_dict["__class__"], "BaseModel")
         self.assertEqual(obj_dict["id"], self.model1.id)
-        self.assertEqual(obj_dict["created_at"], self.model1.created_at.isoformat())
-        self.assertEqual(obj_dict["updated_at"], self.model1.updated_at.isoformat())
+        self.assertEqual(obj_dict["created_at"],
+                         self.model1.created_at.isoformat())
+        self.assertEqual(obj_dict["updated_at"],
+                         self.model1.updated_at.isoformat())
         self.assertEqual(obj_dict["name"], self.model1.name)
         self.assertEqual(obj_dict["num"], self.model1.num)
 
