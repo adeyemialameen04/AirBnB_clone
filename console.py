@@ -161,7 +161,7 @@ class HBNBCommand(cmd.Cmd):
             elif method == "show":
                 inst_id = method_args.strip('"\'')
                 key = f"{cls.__name__}.{inst_id}"
-                if storage.all()[key] is None:
+                if key not in storage.all():
                     print("** instance id missing **")
                     return
                 print(storage.all()[key])
@@ -170,6 +170,7 @@ class HBNBCommand(cmd.Cmd):
     def emptyline(self):
         """Does nothing."""
         pass
+
 
 
 if __name__ == "__main__":
