@@ -69,3 +69,11 @@ class BaseModel:
             if key.startswith(name):
                 objs.append(str(value))
         print(objs)
+
+    def count(self, name):
+        count = 0;
+        for key in models.storage.all():
+            if key.startswith(f"{name}."):
+                count += 1
+
+        print(count)

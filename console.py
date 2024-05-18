@@ -14,6 +14,7 @@ from models.amenity import Amenity
 
 class HBNBCommand(cmd.Cmd):
     """Documentation for the console"""
+    methods = ["all()", "count()"]
 
     prompt = "(hbnb) "
 
@@ -146,11 +147,17 @@ class HBNBCommand(cmd.Cmd):
             return
 
         name = args[0]
+        method = args[1]
         cls = globals().get(name)
         if cls is None:
             print("** class doesn't exist **")
             return
-        cls.all(self, name)
+
+        if method in self.methods:
+            if method == "all()":
+                cls.all(self, name)
+            elif method == "count()":
+                cls.count(self, name)
 
     def emptyline(self):
         """Does nothing."""
