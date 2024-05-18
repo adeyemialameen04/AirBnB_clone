@@ -175,13 +175,43 @@ class HBNBCommand(cmd.Cmd):
                     return
                 del storage.all()[key]
                 storage.save()
+            elif method == "update":
+                last = match_tup[2]
+                shlex_args = shlex.split(last)
+                inst_id = shlex_args[0][:-1]
+                attr_name = shlex_args[1][:-1]
+                attr_val = shlex_args[2]
+                cls = globals().get(name)
+                if cls is None:
+                    print("** class doesn't exist **")
+                    return
+
+                if id == "":
+                    print("** instance id missing **")
+                    return
+
+                key = f"{name}.{inst_id}"
+                if key not in storage.all():
+                    print("** no instance found **")
+                    return
+
+                if attr_name == "":
+                    print("** attribute name missing **")
+                    return
+
+                if attr_val == "":
+                    print("** value missing **")
+                    return
+
+                obj = storage.all()[key]
+                setattr(obj, attr_name, attr_val)
+                obj.save()
             else:
                 print("*** Unknown syntax:")
                 return
         else:
             print(f"*** Unknown syntax: {arg}")
             return
-
 
     def emptyline(self):
         """Does nothing."""
