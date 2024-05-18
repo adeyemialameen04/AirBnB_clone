@@ -2,6 +2,7 @@
 """Documenting the console module"""
 import cmd
 import shlex
+import re
 from models import storage
 from models.base_model import BaseModel
 from models.user import User
@@ -139,23 +140,32 @@ class HBNBCommand(cmd.Cmd):
         obj.save()
 
     def default(self, arg):
-        args = arg.split(".")
-        argc = len(args)
+        match = re.match(r"(\w+)\.(\w+)\((.*)\)", arg)
+        match_tup = match.groups()
+        argc = len(match_tup)
         if argc == 0:
             print("** class name missing **")
             return
 
-        name = args[0]
-        method = args[1]
-        cls = globals().get(name)
-        if cls is None:
-            print("** class doesn't exist **")
-            return
+        if match:
+            name, method, method_args = match.groups()
+            cls = globals().get(name)
+            if cls is None:
+                print("** class doesn't exist **")
+                return
 
-        if method == "all()":
-            cls.all(self, name)
-        elif method == "count()":
-            cls.count(self, name)
+            if method == "all":
+                cls.all(self, name)
+            elif method == "count":
+                cls.count(self, name)
+            elif method == "show":
+                inst_id = method_args.strip('"\'')
+                if inst_id is None and cls is not None:
+                    print("** instance id missing **")
+                    return
+                key = f"{cls.__name__}.{inst_id}"
+                print(storage.all()[key])
+
 
     def emptyline(self):
         """Does nothing."""
