@@ -1,6 +1,8 @@
 #!/usr/bin/python3
 """Documenting the console module"""
+import ast
 import cmd
+import json
 import shlex
 import re
 from models import storage
@@ -141,7 +143,6 @@ class HBNBCommand(cmd.Cmd):
 
     def default(self, arg):
         match = re.match(r"(\w+)\.(\w+)\((.*)\)", arg)
-
         if match:
             match_tup = match.groups()
             name, method, method_args = match_tup
@@ -178,37 +179,51 @@ class HBNBCommand(cmd.Cmd):
             elif method == "update":
                 last = match_tup[2]
                 shlex_args = shlex.split(last)
+                print(shlex_args)
                 inst_id = shlex_args[0][:-1]
-                attr_name = shlex_args[1][:-1]
-                attr_val = shlex_args[2]
-                cls = globals().get(name)
-                if cls is None:
-                    print("** class doesn't exist **")
-                    return
+                if len(shlex_args) == 3:
+                    attr_name = shlex_args[1][:-1]
+                    attr_val = shlex_args[2]
+                    if id == "":
+                        print("** instance id missing **")
+                        return
 
-                if id == "":
-                    print("** instance id missing **")
-                    return
+                    key = f"{name}.{inst_id}"
+                    if key not in storage.all():
+                        print("** no instance found **")
+                        return
 
-                key = f"{name}.{inst_id}"
-                if key not in storage.all():
-                    print("** no instance found **")
-                    return
+                    if attr_name == "":
+                        print("** attribute name missing **")
+                        return
 
-                if attr_name == "":
-                    print("** attribute name missing **")
-                    return
+                    if attr_val == "":
+                        print("** value missing **")
+                        return
 
-                if attr_val == "":
-                    print("** value missing **")
-                    return
+                    obj = storage.all()[key]
+                    setattr(obj, attr_name, attr_val)
+                    obj.save()
+                else:
+                    pattern = r'"([^"]+)",\s*({.*})'
+                    match = re.search(pattern, last)
+                    if match:
+                        inst_id, dict_str = match.groups()
+                        obj_dict = ast.literal_eval(dict_str)
+                        key = f"{name}.{inst_id}"
+                        if key not in storage.all():
+                            print("** no instance found **")
+                            return
 
-                obj = storage.all()[key]
-                setattr(obj, attr_name, attr_val)
-                obj.save()
+                        print(obj_dict)
+                        obj = storage.all()[key]
+                        for attr_name, attr_value in obj_dict.items():
+                            setattr(obj, attr_name, attr_value)
+                        obj.save()
             else:
                 print("*** Unknown syntax:")
                 return
+
         else:
             print(f"*** Unknown syntax: {arg}")
             return
@@ -216,8 +231,6 @@ class HBNBCommand(cmd.Cmd):
     def emptyline(self):
         """Does nothing."""
         pass
-
-
 
 if __name__ == "__main__":
     HBNBCommand().cmdloop()
