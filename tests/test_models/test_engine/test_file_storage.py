@@ -1,59 +1,54 @@
 #!/usr/bin/python3
-"""Documenting module."""
-import os
+"""Document"""
 import unittest
-from models.user import User
 from models.engine.file_storage import FileStorage
+from models.base_model import BaseModel
+import os
+import json
 
 
 class TestFileStorage(unittest.TestCase):
-    """Documenting for FileStorage"""
-
-    def setUp(self):
-        """Setup"""
+    def setUp(self) -> None:
         self.storage = FileStorage()
-        self.file_path = self.storage._FileStorage__file_path
+        self.file_path = self.storage._FileStorage__file_path # replace with getter
         self.objects = self.storage._FileStorage__objects
 
-    def tearDown(self):
-        try:
+    def tearDown(self) -> None:
+        if os.path.exists(self.file_path):
             os.remove(self.file_path)
-        except FileNotFoundError:
-            pass
 
-    def test_new(self):
-        inst = User()
-        self.storage.new(inst)
-        key = f"{inst.__class__.__name__}.{inst.id}"
-        self.assertIn(key, self.storage.all())
+    def test_all_method(self):
+        obj1 = BaseModel()
+        obj2 = BaseModel()
+        self.storage.new(obj1)
+        self.storage.new(obj2)
+        all_object = self.storage.all()
+        self.assertEqual(len(all_object), len(self.objects))
+        self.assertGreaterEqual(len(all_object), 2)
+        self.assertIn(obj1.__class__.__name__ + '.' + obj1.id, all_object)
+        self.assertIn(obj1.__class__.__name__ + '.' + obj2.id, all_object)
 
-    def test_save(self):
-        inst = User()
-        self.storage.new(inst)
+    def test_new_method(self):
+        obj = BaseModel()
+        self.storage.new(obj)
+        self.assertIn(obj.__class__.__name__ + '.' + obj.id, self.storage.all())
+
+    def test_save_method(self):
+        obj = BaseModel()
+        self.storage.new(obj)
         self.storage.save()
-        self.assertEqual(self.file_path, self.storage._FileStorage__file_path)
         self.assertTrue(os.path.exists(self.file_path))
-        # Unfinished
+        with open(self.file_path, 'r') as file:
+            saved_data = json.load(file)
+            self.assertIn(obj.__class__.__name__ + '.' + obj.id, saved_data)
 
-    def test_all(self):
-        inst_1, inst_2 = User(), User()
-        self.storage.new(inst_1)
-        self.storage.new(inst_2)
-        self.storage.save()
-        key_1, key_2 = (f"{inst_1.__class__.__name__}.{inst_1.id}",
-                        f"{inst_2.__class__.__name__}.{inst_2.id}")
-        self.assertIn(key_1, self.storage.all())
-        self.assertIn(key_2, self.storage.all())
-        self.assertGreaterEqual(len(self.storage.all()), 2)
-
-    def test_reload(self):
-        inst = User()
-        self.storage.new(inst)
+    def test_reload_method(self):
+        obj = BaseModel()
+        self.storage.new(obj)
         self.storage.save()
         self.storage._FileStorage__objects = {}
         self.storage.reload()
-        key = f"{inst.__class__.__name__}.{inst.id}"
-        self.assertIn(key, self.storage.all())
+        self.assertIn(obj.__class__.__name__ + '.' + obj.id, self.storage.all())
 
 
 if __name__ == "__main__":
