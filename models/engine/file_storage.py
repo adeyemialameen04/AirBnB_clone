@@ -9,18 +9,35 @@ from models.review import Review
 from models.place import Place
 from models.amenity import Amenity
 
+
 class FileStorage:
+    """
+    Filestorage class.
+    """
     __file_path = "file.json"
     __objects = {}
 
     def all(self):
+        """
+        Returns all the objs in the storage.
+        :return: all the objs in the storage.
+        """
         return FileStorage.__objects
 
     def new(self, obj):
+        """
+        Creates a new obj in the storage.
+        :param obj: The obj to be created.
+        :return: Nothing
+        """
         key = f"{obj.__class__.__name__}.{obj.id}"
         FileStorage.__objects[key] = obj
 
     def save(self):
+        """
+        Saves an obj to the storage.
+        :return: Nothing.
+        """
         obj_dict = {}
         for key, value in FileStorage.__objects.items():
             obj_dict[key] = value.to_dict()
@@ -28,6 +45,10 @@ class FileStorage:
             json.dump(obj_dict, file)
 
     def reload(self):
+        """
+        Reloads the storage.
+        :return: Nothing.
+        """
         try:
             with open(FileStorage.__file_path, "r", encoding="utf-8") as file:
                 try:

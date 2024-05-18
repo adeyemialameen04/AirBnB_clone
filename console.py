@@ -90,6 +90,7 @@ class HBNBCommand(cmd.Cmd):
         storage.save()
 
     def do_all(self, arg):
+        """Gets all."""
         args = shlex.split(arg)
         argc = len(args)
         objs = []
@@ -105,12 +106,10 @@ class HBNBCommand(cmd.Cmd):
             print("** class doesn't exist **")
             return
 
-        for key, value in storage.all().items():
-            if key.startswith(name):
-                objs.append(str(value))
-        print(objs)
+        cls.all(self, name)
 
     def do_update(self, arg):
+        """Updates """
         args = shlex.split(arg)
         argc = len(args)
         if argc == 0:
@@ -162,7 +161,6 @@ class HBNBCommand(cmd.Cmd):
             return
 
         cls.all(self, name)
-
 
     def emptyline(self):
         """Does nothing."""
