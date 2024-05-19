@@ -2,7 +2,6 @@
 """Documenting the console module"""
 import ast
 import cmd
-import json
 import shlex
 import re
 from models import storage
