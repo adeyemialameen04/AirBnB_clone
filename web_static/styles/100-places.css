@@ -1,0 +1,110 @@
+.cards_container {
+  /*background-color: green;*/
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(19rem, 1fr));
+  gap: 3rem;
+  padding-inline: 2rem;
+}
+.cards_container.highlight {
+  margin-top: 10rem;
+}
+
+.card {
+  padding-inline: 0.7rem;
+  padding-block: 1rem;
+  border: 1px solid red;
+  display: flex;
+  flex-direction: column;
+  /*max-width: 490px;*/
+}
+
+.top {
+  display: flex;
+  justify-content: end;
+  border-bottom: 1px solid #dddddd;
+  padding-bottom: 1rem;
+}
+.card h1 {
+  font-size: 30px;
+  justify-self: center;
+  /*align-self: center;*/
+}
+
+.price {
+  margin-left: 90px;
+  font-size: 30px;
+  color: #ff5a5f;
+  border: 4px solid #ff5a5f;
+  border-radius: 50%;
+  height: 80px;
+  width: 80px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.info {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  border-bottom: 1px solid #dddddd;
+  padding-block: 0.7rem;
+}
+
+.info div {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+}
+
+.owner {
+  padding-top: 1rem;
+  padding-bottom: 2rem;
+}
+
+.owner span {
+  font-weight: 600;
+}
+
+.owner p:first-of-type {
+  margin-bottom: 0.6rem;
+}
+
+.card_amenities {
+  padding-bottom: 2rem;
+}
+
+.card_amenities h3,
+.reviews h3 {
+  font-size: 17px;
+  font-weight: 600;
+  padding-bottom: 0.4rem;
+  border-bottom: 1px solid #dddddd;
+}
+
+.card_amenities > div,
+.reviews > div {
+  padding-top: 0.4rem;
+  display: flex;
+  flex-direction: column;
+}
+
+.card_amenities > div div {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.card_amenities > div div img {
+  height: 28px;
+  width: 28px;
+  object-fit: cover;
+}
+
+.reviews > div {
+  gap: 1rem;
+}
+
+.reviews h4 {
+  font-weight: 600;
+}
