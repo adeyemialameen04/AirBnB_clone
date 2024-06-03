@@ -237,26 +237,4 @@
     </div>
     <footer>Best School</footer>
   </body>
-  <script>
-    document.addEventListener("DOMContentLoaded", (event) => {
-      const locationElement = document.querySelector(".location");
-      const amenitiesElement = document.querySelector(".amenities");
-      const cardsContainer = document.querySelector(".cards_container");
-
-      locationElement.addEventListener("mouseenter", () => {
-        cardsContainer.classList.add("highlight");
-      });
-
-      locationElement.addEventListener("mouseleave", () => {
-        cardsContainer.classList.remove("highlight");
-      });
-      amenitiesElement.addEventListener("mouseenter", () => {
-        cardsContainer.classList.add("highlight");
-      });
-
-      amenitiesElement.addEventListener("mouseleave", () => {
-        cardsContainer.classList.remove("highlight");
-      });
-    });
-  </script>
 </html>
